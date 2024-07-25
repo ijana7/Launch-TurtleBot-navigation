@@ -1,7 +1,5 @@
 # Launch-TurtleBot-navigation
 
-# Turtlebot3 ROS Workspace
-
 This repository contains the ROS (Robot Operating System) packages and configuration files for the Turtlebot3 robot platform.
 
 ## Introduction
@@ -129,13 +127,6 @@ Launch the teleoperation node with below command in a new terminal window.
 ```
   $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
-
-
-Uploading 1721889392074382.mp4…
-
-
-
-Uploading 1721889392074382.mp4…
 
 
 
