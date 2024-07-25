@@ -129,6 +129,6 @@ Launch the teleoperation node with below command in a new terminal window.
 ```
 
 
+https://github.com/user-attachments/assets/b614a68b-3293-4fbc-a171-379033f3025c
 
-Uploading 1721889392074382.mp4…
 
