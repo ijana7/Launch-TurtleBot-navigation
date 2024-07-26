@@ -99,7 +99,7 @@ The [Gazebo Simulation](https://emanual.robotis.com/docs/en/platform/turtlebot3/
 
 ***
 
-###  Empty World:
+##  Empty World:
 ```
   $ export TURTLEBOT3_MODEL=burger
   $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
@@ -108,14 +108,14 @@ The [Gazebo Simulation](https://emanual.robotis.com/docs/en/platform/turtlebot3/
 <img width="1101" alt="‏لقطة الشاشة ١٤٤٦-٠١-١٩ في ٨ ٥٥ ١٧ ص" src="https://github.com/user-attachments/assets/179d5722-665b-41bb-9468-cfdb1c3c8d4d">
 <img width="1184" alt="‏لقطة الشاشة ١٤٤٦-٠١-١٩ في ٨ ٥٥ ٤٧ ص" src="https://github.com/user-attachments/assets/dc7f3a7f-ee78-468e-a6d3-fa4527b180a3">
 
-### TurtleBot3 World:
+## TurtleBot3 World:
 ```
   $ export TURTLEBOT3_MODEL=waffle
   $ roslaunch turtlebot3_gazebo turtlebot3_world.launch
 ```
 <img width="1177" alt="‏لقطة الشاشة ١٤٤٦-٠١-١٩ في ٨ ٥٦ ٥٢ ص" src="https://github.com/user-attachments/assets/83cc4402-0189-4cbf-855a-ac8504f88a49">
 
-###  TurtleBot3 House:
+##  TurtleBot3 House:
 ```
   $ export TURTLEBOT3_MODEL=waffle_pi
   $ roslaunch turtlebot3_gazebo turtlebot3_house.launch
@@ -131,4 +131,106 @@ Launch the teleoperation node with below command in a new terminal window.
 
 https://github.com/user-attachments/assets/b614a68b-3293-4fbc-a171-379033f3025c
 
+## 1. Launch Simulation World
+- Three Gazebo environments are prepared, but for creating a map with SLAM, it is recommended to use either ``TurtleBot3 World`` or ``TurtleBot3 House``.
+- Please use the proper keyword among ``burger``, ``waffle``, ``waffle_pi`` for the TURTLEBOT3_MODEL parameter.
 
+```
+  $ export TURTLEBOT3_MODEL=burger
+  $ roslaunch turtlebot3_gazebo turtlebot3_world.launch
+```
+
+## 2. Run SLAM Node
+
+1. Open a **Terminal** & Source the ROS 1 Noetic: 
+```
+  $ source /opt/ros/noetic/setup.bash
+```
+
+2. Run SLAM Node:
+  - Gmapping SLAM method is used by default.
+```
+  $ export TURTLEBOT3_MODEL=burger
+  $ roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+```
+### 3. Run Teleoperation Node
+
+1. Open a new **Terminal** & Source the ROS 1 Noetic: 
+
+```
+  $ source /opt/ros/noetic/setup.bash
+```
+
+2. Run Teleoperation Node:
+
+```
+  $ export TURTLEBOT3_MODEL=burger
+  $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+### 4. Save The Map
+When the map is created successfully:
+
+1. Open a **Terminal** & Source the ROS 1 Noetic: 
+```
+  $ source /opt/ros/noetic/setup.bash
+```
+
+2. Save the map:
+```
+  $ rosrun map_server map_saver -f ~/map
+```
+
+> The saved map.pgm file
+
+
+***
+
+# Navigation Simulation
+Just like the SLAM in Gazebo simulator, you can select or create various environments and robot models in [virtual Navigation world](https://emanual.robotis.com/docs/en/platform/turtlebot3/nav_simulation/).
+
+Proper map has to be prepared before running the Navigation. Other than preparing simulation environment instead of bringing up the robot, Navigation Simulation is pretty similar to that of Navigation.
+
+# 1. Launch Simulation World
+
+1. Terminate all applications:
+
+2. Launch Simulation World
+ - In the previous SLAM section, TurtleBot3 World is used to creat a map. The same Gazebo environment will be used for Navigation.
+ - Please use the proper keyword among ``burger``, ``waffle``, ``waffle_pi`` for the TURTLEBOT3_MODEL parameter.
+ 
+```
+  $ source /opt/ros/noetic/setup.bash
+  $ source ~/my_turtlebot_ws/devel/setup.bash
+  $ cd  my_turtlebot_ws/
+  $ export TURTLEBOT3_MODEL=burger
+  $ roslaunch turtlebot3_gazebo turtlebot3_world.launch
+```
+
+
+# 2. Run Navigation Node
+
+1. Open a **Terminal** & Source the ROS 1 Noetic: 
+```
+  $ source /opt/ros/noetic/setup.bash
+  $ source ~/my_turtlebot_ws/devel/setup.bash 
+```
+
+2. Run Navigation Node:
+```
+  $ export TURTLEBOT3_MODEL=burger
+  $ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+```
+
+
+# 3. Estimate Initial Pose
+
+- Initial Pose Estimation
+  - must be performed before running the Navigation as this process initializes the AMCL parameters that are critical in Navigation.
+  - TurtleBot3 has to be correctly located on the map with the LDS sensor data that neatly overlaps the displayed map.
+
+
+4. Click the ``2D Pose Estimate`` button in the RViz menu.
+
+ 5. Set Navigation Goal
+
+1. Click the ``2D Nav Goal`` button in the RViz menu.
